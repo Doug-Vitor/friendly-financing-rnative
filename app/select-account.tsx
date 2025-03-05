@@ -1,13 +1,10 @@
 import { ContainerWithNavigation } from '@components/shared';
 import { Checkable } from '@components/ui';
+import { useCoreContext } from '@contexts/Core';
 import { useState } from 'react';
 import { View } from 'react-native';
 
-enum AuthType {
-  SIGN_IN = 'signin',
-  SIGN_UP = 'signup',
-  NO_ACCOUNT = 'noaccount',
-}
+import { AuthType } from '@/types';
 
 const options = [
   {
@@ -29,6 +26,7 @@ const options = [
 ];
 
 export default function SelectAccount() {
+  const { onAuthTypeChange } = useCoreContext();
   const [selectedAuthType, setSelectedAuthType] = useState<AuthType>();
 
   return (
@@ -36,7 +34,7 @@ export default function SelectAccount() {
       navigation={{
         enabled: selectedAuthType === AuthType.NO_ACCOUNT,
         label: 'Confirmar escolha',
-        href: selectedAuthType === AuthType.NO_ACCOUNT ? 'dashboard' : selectedAuthType!,
+        onPress: () => onAuthTypeChange(selectedAuthType),
       }}>
       <View />
       <View className="gap-2">

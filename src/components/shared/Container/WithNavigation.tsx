@@ -7,8 +7,7 @@ interface Props {
   navigation: {
     enabled?: boolean;
     label: ReactNode;
-    href: string;
-  };
+  } & ({ href: string } | { onPress: () => void });
 }
 
 export function ContainerWithNavigation({ navigation, children }: PropsWithChildren<Props>) {
@@ -20,7 +19,10 @@ export function ContainerWithNavigation({ navigation, children }: PropsWithChild
 
       <Button
         textClassName="font-bold text-lg"
-        {...(navigation.enabled && { onPress: () => navigate(navigation.href as never) })}>
+        {...(navigation.enabled && {
+          onPress: () =>
+            navigation.onPress ? navigation.onPress() : navigate(navigation.href as never),
+        })}>
         {navigation.label}
       </Button>
     </SafeAreaView>
