@@ -3,6 +3,12 @@
   "compilerOptions": {
     "strict": true,
     "baseUrl": ".",
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@contexts/*": ["src/contexts/*"],
+      "@types/*": ["src/types/*"],
+      "@/*": ["src/*"],
+    },
   },
   "include": [
     "**/*.ts",
