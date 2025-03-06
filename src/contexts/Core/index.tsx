@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from 'expo-router';
+import { router } from 'expo-router';
 import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
 
 import { AUTH_TYPE_STORAGE_KEY } from '@/constants';
@@ -8,7 +8,6 @@ import { AuthType } from '@/types';
 const CoreContext = createContext({});
 export function CoreContextProvider({ children }: PropsWithChildren) {
   const [authType, setAuthType] = useState<AuthType>();
-  const { navigate } = useNavigation();
 
   useEffect(() => {
     if (authType) return;
@@ -22,8 +21,11 @@ export function CoreContextProvider({ children }: PropsWithChildren) {
   const onAuthTypeChange = (authType?: AuthType) => {
     if (authType) {
       setAuthType(authType);
-      AsyncStorage.setItem(AUTH_TYPE_STORAGE_KEY, authType);
-      navigate(authType === AuthType.NO_ACCOUNT ? 'dashboard' : `auth/${authType}`);
+
+      if (authType === AuthType.NO_ACCOUNT) {
+        AsyncStorage.setItem(AUTH_TYPE_STORAGE_KEY, authType);
+        router.replace('/dashboard');
+      } else router.push(`/auth/${authType}`);
     }
   };
 

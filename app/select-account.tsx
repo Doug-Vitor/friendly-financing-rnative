@@ -32,7 +32,7 @@ export default function SelectAccount() {
   return (
     <ContainerWithNavigation
       navigation={{
-        enabled: selectedAuthType === AuthType.NO_ACCOUNT,
+        enabled: typeof selectedAuthType === 'string',
         label: 'Confirmar escolha',
         onPress: () => onAuthTypeChange(selectedAuthType),
       }}>
