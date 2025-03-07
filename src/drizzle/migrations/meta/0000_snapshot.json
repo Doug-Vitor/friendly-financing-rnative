@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "9fa8678b-2149-420c-937b-9fd9d57c53a7",
+  "id": "5a17395e-01e9-4b99-b13c-7ace90f4a9cf",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "finances": {
@@ -13,6 +13,13 @@
           "primaryKey": true,
           "notNull": true,
           "autoincrement": true
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         },
         "priceInCents": {
           "name": "priceInCents",
@@ -30,14 +37,14 @@
         },
         "createdAt": {
           "name": "createdAt",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
-        "expirationDate": {
-          "name": "expirationDate",
-          "type": "text",
+        "expirationDay": {
+          "name": "expirationDay",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
