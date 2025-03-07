@@ -1,5 +1,5 @@
 import { ContainerWithNavigation } from '@components/shared';
-import { Text } from 'react-native';
+import { Text } from '@components/ui';
 
 export default function Home() {
   return (

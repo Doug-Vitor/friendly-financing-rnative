@@ -1,6 +1,7 @@
-import { PropsWithoutRef } from 'react';
-import { Text, TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
+import { Text } from '@components/ui/Text';
 import { CircleCheck } from 'lucide-react-native';
+import { PropsWithoutRef } from 'react';
+import { TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
 
 interface Props {
   title: string;
@@ -20,11 +21,11 @@ export function Checkable({
       {...props}
       className={`rounded-xl border p-3 ${className} ${checked ? 'border-primary-light' : 'border-typography-light'}`}>
       <View className="flex-row justify-between">
-        <Text className="font-bold text-typography-light dark:text-typography-dark">{title}</Text>
+        <Text className="font-bold">{title}</Text>
         {checked && <CircleCheck color="#8bff00" />}
       </View>
 
-      <Text className="text-sm text-typography-light dark:text-typography-dark">{description}</Text>
+      <Text className="text-sm">{description}</Text>
     </TouchableOpacity>
   );
 }
