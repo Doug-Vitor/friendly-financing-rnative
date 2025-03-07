@@ -4,9 +4,13 @@ import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useSt
 
 import { AUTH_TYPE_STORAGE_KEY } from '@/constants';
 import { useLocalPersister, useOnlinePersister } from '@/hooks';
-import { AuthType } from '@/types';
+import { AuthType, Persister } from '@/types';
 
-const CoreContext = createContext({});
+type Context = {
+  onAuthTypeChange: (authType: AuthType) => void;
+} & Persister;
+
+const CoreContext = createContext<Context>({} as Context);
 export function CoreContextProvider({ children }: PropsWithChildren) {
   const [authType, setAuthType] = useState<AuthType>();
 
@@ -32,7 +36,7 @@ export function CoreContextProvider({ children }: PropsWithChildren) {
     return () => ({});
   }, [authType]);
 
-  const persister = usePersister();
+  const persister = usePersister() as Persister;
   return (
     <CoreContext.Provider value={{ onAuthTypeChange, ...persister }}>
       {children}
