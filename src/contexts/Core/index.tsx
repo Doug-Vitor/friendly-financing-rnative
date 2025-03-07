@@ -1,4 +1,4 @@
-import { router } from 'expo-router';
+import { Href, router } from 'expo-router';
 import Storage from 'expo-sqlite/kv-store';
 import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react';
 
@@ -19,14 +19,14 @@ export function CoreContextProvider({ children }: PropsWithChildren) {
     Storage.getItem(AUTH_TYPE_STORAGE_KEY).then(onAuthTypeChange);
   }, [authType]);
 
-  const onAuthTypeChange = (authType?: AuthType) => {
+  const onAuthTypeChange = (authType?: string | null) => {
     if (authType) {
-      setAuthType(authType);
+      setAuthType(authType as AuthType);
 
       if (authType === AuthType.NO_ACCOUNT) {
         Storage.setItem(AUTH_TYPE_STORAGE_KEY, authType);
         router.replace('/dashboard');
-      } else router.push(`/auth/${authType}`);
+      } else router.push(`/auth/${authType}` as Href);
     }
   };
 

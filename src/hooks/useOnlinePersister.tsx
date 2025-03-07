@@ -5,10 +5,7 @@ export function useOnlinePersister(): Persister {
     create(obj: any): Promise<any> {
       throw new Error('Not implemented.');
     },
-    get(id: number): Promise<any> {
-      throw new Error('Not implemented.');
-    },
-    getAll(): Promise<any> {
+    get(id?: number): Promise<any> {
       throw new Error('Not implemented.');
     },
     update(obj: any): Promise<any> {
