@@ -34,7 +34,7 @@ export default function SelectAccount() {
       navigation={{
         enabled: typeof selectedAuthType === 'string',
         label: 'Confirmar escolha',
-        onPress: () => onAuthTypeChange(selectedAuthType),
+        onPress: () => onAuthTypeChange(selectedAuthType!),
       }}>
       <View />
       <View className="gap-2">

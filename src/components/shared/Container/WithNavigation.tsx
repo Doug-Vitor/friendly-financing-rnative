@@ -1,5 +1,5 @@
 import { Button } from '@components/ui';
-import { router } from 'expo-router';
+import { Href, router } from 'expo-router';
 import { PropsWithChildren, ReactNode } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -7,7 +7,7 @@ interface Props {
   navigation: {
     enabled?: boolean;
     label: ReactNode;
-  } & ({ href: string } | { onPress: () => void });
+  } & ({ href: string; onPress?: never } | { onPress: () => void; href?: never });
 }
 
 export function ContainerWithNavigation({ navigation, children }: PropsWithChildren<Props>) {
@@ -18,7 +18,8 @@ export function ContainerWithNavigation({ navigation, children }: PropsWithChild
       <Button
         textClassName="font-bold text-lg"
         {...(navigation.enabled && {
-          onPress: () => (navigation.onPress ? navigation.onPress() : router.push(navigation.href)),
+          onPress: () =>
+            navigation.onPress ? navigation.onPress() : router.push(navigation.href as Href),
         })}>
         {navigation.label}
       </Button>

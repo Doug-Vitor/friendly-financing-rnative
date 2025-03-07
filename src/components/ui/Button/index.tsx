@@ -1,5 +1,7 @@
 import { PropsWithChildren } from 'react';
-import { Text, TouchableOpacity, TouchableOpacityProps } from 'react-native';
+import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
+
+import { Text } from '@/components/ui';
 
 interface Props {
   textClassName: string;
@@ -15,10 +17,7 @@ export function Button({
     <TouchableOpacity
       {...props}
       className={`rounded-lg bg-primary-light p-3 dark:bg-primary-dark ${className}`}>
-      <Text
-        className={`text-center text-typography-light dark:text-typography-dark ${textClassName}`}>
-        {children}
-      </Text>
+      <Text className={`text-center  ${textClassName}`}>{children}</Text>
     </TouchableOpacity>
   );
 }
