@@ -1,8 +1,9 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
-import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
+import Storage from 'expo-sqlite/kv-store';
+import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react';
 
 import { AUTH_TYPE_STORAGE_KEY } from '@/constants';
+import { useLocalPersister, useOnlinePersister } from '@/hooks';
 import { AuthType } from '@/types';
 
 const CoreContext = createContext({});
@@ -11,11 +12,7 @@ export function CoreContextProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     if (authType) return;
-
-    AsyncStorage.getItem(AUTH_TYPE_STORAGE_KEY, (error, result) => {
-      if (error) return console.error(error);
-      onAuthTypeChange(result as AuthType);
-    });
+    Storage.getItem(AUTH_TYPE_STORAGE_KEY).then(onAuthTypeChange);
   }, [authType]);
 
   const onAuthTypeChange = (authType?: AuthType) => {
@@ -23,13 +20,24 @@ export function CoreContextProvider({ children }: PropsWithChildren) {
       setAuthType(authType);
 
       if (authType === AuthType.NO_ACCOUNT) {
-        AsyncStorage.setItem(AUTH_TYPE_STORAGE_KEY, authType);
+        Storage.setItem(AUTH_TYPE_STORAGE_KEY, authType);
         router.replace('/dashboard');
       } else router.push(`/auth/${authType}`);
     }
   };
 
-  return <CoreContext.Provider value={{ onAuthTypeChange }}>{children}</CoreContext.Provider>;
+  const usePersister = useMemo(() => {
+    if (authType) return authType === AuthType.NO_ACCOUNT ? useLocalPersister : useOnlinePersister;
+
+    return () => ({});
+  }, [authType]);
+
+  const persister = usePersister();
+  return (
+    <CoreContext.Provider value={{ onAuthTypeChange, ...persister }}>
+      {children}
+    </CoreContext.Provider>
+  );
 }
 
 export function useCoreContext() {
