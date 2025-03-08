@@ -17,12 +17,12 @@ export function useSharedEntry({
   replaceRouteOnSuccess,
   nextRouteOnSuccess,
 }: PropsWithNextRoute | PropsWithReplace) {
-  const { get, update } = useCoreContext();
+  const { getById, update } = useCoreContext();
   const { id, entityName } = useLocalSearchParams();
 
   const { data } = useQuery({
     queryKey: [id],
-    queryFn: async () => await get(entityName, id as unknown as number),
+    queryFn: async () => await getById(entityName, id),
   });
 
   const { mutateAsync, isPending } = useMutation({

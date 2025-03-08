@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { eq, sum } from 'drizzle-orm';
 import { migrate } from 'drizzle-orm/expo-sqlite/migrator';
 
 import { db } from '@/drizzle';
@@ -19,12 +19,26 @@ export function useLocalPersister(): Persister {
           .returning()
       )[0];
     },
-    async get(table: keyof typeof tables, id?: number): Promise<any> {
+    async get(table: keyof typeof tables, filters = []): Promise<any> {
       const fromTable = tables[table];
-      const query = db.select().from(fromTable);
+      let query = db.select().from(fromTable);
+      let dashboardQuery = db.select({ value: sum(fromTable.priceInCents) }).from(fromTable);
 
-      if (id) return (await query.where(byId(fromTable, id)))[0];
-      return await query;
+      [query, dashboardQuery].forEach((query) =>
+        filters.forEach((filter) => (query = query.where(filter)))
+      );
+
+      return {
+        data: await query,
+        dashboard: {
+          debit: (await dashboardQuery.where(eq(fromTable.type, 'debit')))[0].value,
+          credit: (await dashboardQuery.where(eq(fromTable.type, 'credit')))[0].value,
+        },
+      };
+    },
+    async getById(table: keyof typeof tables, id: number): Promise<any> {
+      const fromTable = tables[table];
+      return (await db.select().from(fromTable).where(byId(fromTable, id)))[0];
     },
     async update(table: keyof typeof tables, obj: any): Promise<any> {
       delete obj.createdAt;
