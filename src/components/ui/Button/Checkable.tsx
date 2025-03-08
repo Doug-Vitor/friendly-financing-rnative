@@ -1,7 +1,8 @@
-import { Text } from '@components/ui/Text';
 import { CircleCheck } from 'lucide-react-native';
 import { PropsWithoutRef } from 'react';
 import { TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
+
+import { Text } from '@/components';
 
 interface Props {
   title: string;

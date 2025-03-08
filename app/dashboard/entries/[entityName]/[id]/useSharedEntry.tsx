@@ -1,6 +1,7 @@
-import { useCoreContext } from '@contexts/Core';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Href, router, useLocalSearchParams } from 'expo-router';
+
+import { useCoreContext } from '@/contexts';
 
 interface PropsWithNextRoute {
   replaceRouteOnSuccess?: never;

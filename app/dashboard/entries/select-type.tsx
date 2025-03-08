@@ -1,10 +1,10 @@
-import { ContainerWithNavigation } from '@components/shared';
-import { Checkable, Text } from '@components/ui';
-import { useCoreContext } from '@contexts/Core';
 import { useMutation } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { View } from 'react-native';
+
+import { ContainerWithNavigation, Checkable, Text } from '@/components';
+import { useCoreContext } from '@/contexts';
 
 const options = [
   {

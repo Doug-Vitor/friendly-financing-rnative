@@ -1,5 +1,6 @@
-import { Text } from '@components/ui';
 import { View } from 'react-native';
+
+import { Text } from '@/components';
 
 export default function Layout() {
   return (
