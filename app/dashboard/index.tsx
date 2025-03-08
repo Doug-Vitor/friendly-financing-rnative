@@ -6,10 +6,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { DashboardSummary, DashboardVerticalList } from '@/components';
 import { useCoreContext } from '@/contexts';
+import { shadow } from '@/styles';
 
 const commonBottomProps = {
-  buttonClassName: 'rounded-full bg-primary-light p-3 dark:bg-primary-dark',
   icon: { size: 26, color: 'black' },
+  button: {
+    style: shadow,
+    className: 'rounded-full bg-primary-light p-3 dark:bg-primary-dark',
+  },
 };
 
 export default function Dashboard() {
@@ -21,17 +25,17 @@ export default function Dashboard() {
   });
 
   return (
-    <SafeAreaView className="relative h-full flex-1 px-3">
+    <SafeAreaView className="relative h-full flex-1 px-2">
       <DashboardSummary {...data.dashboard} />
       <DashboardVerticalList data={data.data} />
 
       <View className="absolute bottom-3 right-3 flex w-fit items-center justify-center gap-2">
-        <TouchableOpacity className={commonBottomProps.buttonClassName}>
+        <TouchableOpacity {...commonBottomProps.button}>
           <ListFilter {...commonBottomProps.icon} />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => router.push('/dashboard/entries/select-type')}
-          className={commonBottomProps.buttonClassName}>
+          {...commonBottomProps.button}>
           <Plus {...commonBottomProps.icon} />
         </TouchableOpacity>
       </View>

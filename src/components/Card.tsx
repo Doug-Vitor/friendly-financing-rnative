@@ -1,7 +1,9 @@
-import { ArrowRight, LucideIcon } from 'lucide-react-native';
+import { LucideIcon } from 'lucide-react-native';
 import { TouchableOpacity, View } from 'react-native';
 
 import { Text } from './ui';
+
+import { shadow } from '@/styles';
 
 interface Props {
   title: string;
@@ -28,8 +30,9 @@ export function Card({
   return (
     <Element
       onPress={onPress}
-      className={`flex flex-row justify-between gap-3 rounded-xl p-4 shadow-sm ${className} ${bgColor}`}>
-      <View className="items-center justify-center rounded-full bg-white p-2 shadow-md">
+      style={shadow}
+      className={`flex flex-row justify-between gap-3 rounded-xl p-4 ${className} ${bgColor}`}>
+      <View style={shadow} className="items-center justify-center rounded-full bg-white p-2">
         <Icon color="#000" />
       </View>
 

@@ -32,7 +32,7 @@ export function DashboardVerticalList({ data }: Props) {
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={<Text className="pb-1 text-xl">Registros encontrados</Text>}
         ItemSeparatorComponent={() => <View className="my-1.5" />}
-        data={data}
+        data={[data,data,data,data,data].flat()}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <Card
