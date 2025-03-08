@@ -1,6 +1,6 @@
 export interface Persister {
-  create: (obj: any) => Promise<any>;
-  get: (id?: number) => Promise<any>;
-  update: (obj: any) => Promise<any>;
-  destroy: (id: any) => Promise<any>;
+  create: (entityName: any, obj: any) => Promise<any>;
+  get: (entityName: any, id?: number) => Promise<any>;
+  update: (entityName: any, obj: any) => Promise<any>;
+  destroy: (entityName: any, id: any) => Promise<any>;
 }

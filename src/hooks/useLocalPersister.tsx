@@ -3,34 +3,38 @@ import { migrate } from 'drizzle-orm/expo-sqlite/migrator';
 
 import { db } from '@/drizzle';
 import migrations from '@/drizzle/migrations/migrations';
-import { financesTable } from '@/drizzle/schema';
+import { tables } from '@/drizzle/schema';
 import { Persister } from '@/types/Persister';
 
 migrate(db, migrations).catch(console.error);
 
-const byId = (id: number) => eq(financesTable.id, id);
+const byId = (table: any, id: number) => eq(table.id, id);
 export function useLocalPersister(): Persister {
   return {
-    async create(obj: any): Promise<any> {
+    async create(table: keyof typeof tables, obj: any): Promise<any> {
       return (
         await db
-          .insert(financesTable)
+          .insert(tables[table])
           .values({ ...obj, createdAt: +new Date() })
           .returning()
       )[0];
     },
-    async get(id?: number): Promise<any> {
-      const query = db.select().from(financesTable);
+    async get(table: keyof typeof tables, id?: number): Promise<any> {
+      const fromTable = tables[table];
+      const query = db.select().from(fromTable);
 
-      if (id) return (await query.where(byId(id)))[0];
+      if (id) return (await query.where(byId(fromTable, id)))[0];
       return await query;
     },
-    async update(obj: any): Promise<any> {
+    async update(table: keyof typeof tables, obj: any): Promise<any> {
       delete obj.createdAt;
-      return await db.update(financesTable).set(obj).where(byId(obj.id)).returning();
+
+      const fromTable = tables[table];
+      return await db.update(fromTable).set(obj).where(byId(fromTable, obj.id)).returning();
     },
-    async destroy(id: any): Promise<any> {
-      return await db.delete(financesTable).where(byId(id));
+    async destroy(table: keyof typeof tables, id: any): Promise<any> {
+      const fromTable = tables[table];
+      return await db.delete(fromTable).where(byId(fromTable, id));
     },
   };
 }

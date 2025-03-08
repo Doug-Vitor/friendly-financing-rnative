@@ -1,11 +1,11 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "5a17395e-01e9-4b99-b13c-7ace90f4a9cf",
+  "id": "c37cfc3e-db7e-41df-9b1b-353c0c0de31c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
-    "finances": {
-      "name": "finances",
+    "bills": {
+      "name": "bills",
       "columns": {
         "id": {
           "name": "id",
@@ -19,14 +19,63 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
+          "autoincrement": false,
+          "default": "''"
         },
         "priceInCents": {
           "name": "priceInCents",
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false,
+          "default": 0
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
           "autoincrement": false
+        },
+        "expirationDay": {
+          "name": "expirationDay",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "incomes": {
+      "name": "incomes",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "''"
+        },
+        "priceInCents": {
+          "name": "priceInCents",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
         },
         "type": {
           "name": "type",
@@ -42,8 +91,8 @@
           "notNull": true,
           "autoincrement": false
         },
-        "expirationDay": {
-          "name": "expirationDay",
+        "billId": {
+          "name": "billId",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
@@ -51,7 +100,21 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "incomes_billId_bills_id_fk": {
+          "name": "incomes_billId_bills_id_fk",
+          "tableFrom": "incomes",
+          "tableTo": "bills",
+          "columnsFrom": [
+            "billId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "checkConstraints": {}
