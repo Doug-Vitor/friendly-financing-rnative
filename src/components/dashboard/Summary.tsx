@@ -20,13 +20,13 @@ export function DashboardSummary({ debit, credit }: Props) {
 
       <View className="flex flex-row gap-2">
         <Card
-          className="w-1/2 bg-primary-light dark:bg-primary-dark"
+          className="flex-1 bg-primary-light dark:bg-primary-dark"
           title={formatPrice(credit)}
           description="Ganhos"
           Icon={DollarSign}
         />
         <Card
-          className="w-1/2 bg-red-500"
+          className="flex-1 bg-red-500"
           textColor="text-white"
           title={formatPrice(debit)}
           description="Gastos"
