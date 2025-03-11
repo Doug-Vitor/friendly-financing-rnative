@@ -12,6 +12,7 @@ interface Props {
   bgColor?: string;
   textColor?: string;
   Icon: LucideIcon;
+  RightComponent?: () => JSX.Element;
   onPress?: () => void;
 }
 
@@ -23,6 +24,7 @@ export function Card({
   textColor = '',
   onPress,
   Icon,
+  RightComponent = () => <></>,
 }: Props) {
   const pressable = typeof onPress === 'function';
   const Element = pressable ? TouchableOpacity : View;
@@ -36,10 +38,12 @@ export function Card({
         <Icon color="#000" />
       </View>
 
-      <View className="w-full justify-center">
+      <View className="flex-1 justify-center">
         <Text className={`text-lg font-bold ${textColor}`}>{title}</Text>
         {description && <Text className={`text-sm ${textColor}`}>{description}</Text>}
       </View>
+
+      <RightComponent />
     </Element>
   );
 }
