@@ -12,6 +12,7 @@ type Context = {
 
 const CoreContext = createContext<Context>({} as Context);
 export function CoreContextProvider({ children }: PropsWithChildren) {
+  const [filters, setFilters] = useState({});
   const [authType, setAuthType] = useState<AuthType>();
 
   useEffect(() => {
@@ -38,7 +39,7 @@ export function CoreContextProvider({ children }: PropsWithChildren) {
 
   const persister = usePersister() as Persister;
   return (
-    <CoreContext.Provider value={{ onAuthTypeChange, ...persister }}>
+    <CoreContext.Provider value={{ onAuthTypeChange, filters, setFilters, ...persister }}>
       {children}
     </CoreContext.Provider>
   );

@@ -38,7 +38,9 @@ export function DashboardSummary({ debit, credit }: Props) {
         className="mt-2 bg-blue-500"
         textColor="text-white"
         title={formatPrice(profit)}
-        description={profit < 0 ? 'Sem lucros! 😥' : 'Com lucros! 🥵'}
+        description={
+          profit === 0 ? 'Nenhum lucro!' : profit < 0 ? 'Com prejuízos! 😥' : 'Com lucros! 🥵'
+        }
         Icon={ChartNoAxesCombined}
       />
     </View>

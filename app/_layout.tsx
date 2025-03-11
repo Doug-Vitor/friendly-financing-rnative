@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Slot } from 'expo-router';
+import { Slot, Stack } from 'expo-router';
 import { SQLiteProvider } from 'expo-sqlite';
 
 import { DATABASE_NAME } from '@/constants';
@@ -22,7 +22,15 @@ export default function Layout() {
     <SQLiteProvider databaseName={DATABASE_NAME}>
       <QueryClientProvider client={queryClient}>
         <CoreContextProvider>
-          <Slot />
+          <Stack screenOptions={{ headerShown: false }}>
+            <Slot />
+            <Stack.Screen
+              name="dashboard/filter-modal"
+              options={{
+                presentation: 'modal',
+              }}
+            />
+          </Stack>
         </CoreContextProvider>
       </QueryClientProvider>
     </SQLiteProvider>

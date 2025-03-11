@@ -17,10 +17,10 @@ const commonBottomProps = {
 };
 
 export default function Dashboard() {
-  const { get } = useCoreContext();
-  const { data, isLoading } = useQuery({
-    queryKey: [],
-    queryFn: async () => await get('incomes'),
+  const { get, filters } = useCoreContext();
+  const { data } = useQuery({
+    queryKey: [filters],
+    queryFn: async () => await get('incomes', filters),
     initialData: { data: [], dashboard: {} },
   });
 
@@ -30,7 +30,9 @@ export default function Dashboard() {
       <DashboardVerticalList data={data.data} />
 
       <View className="absolute bottom-3 right-3 flex w-fit items-center justify-center gap-2">
-        <TouchableOpacity {...commonBottomProps.button}>
+        <TouchableOpacity
+          onPress={() => router.push('/dashboard/filter-modal')}
+          {...commonBottomProps.button}>
           <ListFilter {...commonBottomProps.icon} />
         </TouchableOpacity>
         <TouchableOpacity

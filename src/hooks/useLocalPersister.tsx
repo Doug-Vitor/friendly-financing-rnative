@@ -1,4 +1,4 @@
-import { eq, sum } from 'drizzle-orm';
+import { desc, eq, gte, lte, sum } from 'drizzle-orm';
 import { migrate } from 'drizzle-orm/expo-sqlite/migrator';
 
 import { db } from '@/drizzle';
@@ -9,6 +9,14 @@ import { Persister } from '@/types/Persister';
 migrate(db, migrations).catch(console.error);
 
 const byId = (table: any, id: number) => eq(table.id, id);
+const applyFilters = (query, table, filters) => {
+  if (filters?.createdAt?.from) query = query.where(gte(table.createdAt, filters.createdAt.from));
+  if (filters?.createdAt?.to) query = query.where(lte(table.createdAt, filters.createdAt.to));
+  if (filters?.type?.eq) query = query.where(eq(table.type, filters.type?.eq));
+
+  return query;
+};
+
 export function useLocalPersister(): Persister {
   return {
     async create(table: keyof typeof tables, obj: any): Promise<any> {
@@ -19,20 +27,20 @@ export function useLocalPersister(): Persister {
           .returning()
       )[0];
     },
-    async get(table: keyof typeof tables, filters = []): Promise<any> {
+    async get(table: keyof typeof tables, filters = {}): Promise<any> {
       const fromTable = tables[table];
-      let query = db.select().from(fromTable);
-      let dashboardQuery = db.select({ value: sum(fromTable.priceInCents) }).from(fromTable);
-
-      [query, dashboardQuery].forEach((query) =>
-        filters.forEach((filter) => (query = query.where(filter)))
-      );
+      const query = db.select().from(fromTable);
+      const dashboardQuery = db.select({ value: sum(fromTable.priceInCents) }).from(fromTable);
 
       return {
-        data: await query,
+        data: await applyFilters(query, fromTable, filters).orderBy(desc(fromTable.createdAt)),
         dashboard: {
-          debit: (await dashboardQuery.where(eq(fromTable.type, 'debit')))[0].value,
-          credit: (await dashboardQuery.where(eq(fromTable.type, 'credit')))[0].value,
+          debit: (
+            await applyFilters(dashboardQuery, fromTable, { type: { eq: 'debit' }, ...filters })
+          )[0].value,
+          credit: (
+            await applyFilters(dashboardQuery, fromTable, { type: { eq: 'credit' }, ...filters })
+          )[0].value,
         },
       };
     },
