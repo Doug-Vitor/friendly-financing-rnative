@@ -18,7 +18,7 @@ const commonBottomProps = {
 
 export default function Dashboard() {
   const { get, filters } = useCoreContext();
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: [filters],
     queryFn: async () => await get('incomes', filters),
     initialData: { data: [], dashboard: {} },
@@ -27,7 +27,7 @@ export default function Dashboard() {
   return (
     <SafeAreaView className="relative h-full flex-1 px-2">
       <DashboardSummary {...data.dashboard} />
-      <DashboardVerticalList data={data.data} />
+      <DashboardVerticalList data={data.data} refetch={refetch} />
 
       <View className="absolute bottom-3 right-3 flex w-fit items-center justify-center gap-2">
         <TouchableOpacity
