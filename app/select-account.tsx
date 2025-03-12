@@ -1,9 +1,8 @@
-import { ContainerWithNavigation } from '@components/shared';
-import { Checkable } from '@components/ui';
-import { useCoreContext } from '@contexts/Core';
 import { useState } from 'react';
 import { View } from 'react-native';
 
+import { ContainerWithNavigation, Checkable } from '@/components';
+import { useCoreContext } from '@/contexts';
 import { AuthType } from '@/types';
 
 const options = [

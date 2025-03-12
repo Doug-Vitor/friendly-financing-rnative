@@ -1,5 +1,4 @@
-import { ContainerWithNavigation } from '@components/shared';
-import { Text } from '@components/ui';
+import { ContainerWithNavigation, Text } from '@/components';
 
 export default function Home() {
   return (

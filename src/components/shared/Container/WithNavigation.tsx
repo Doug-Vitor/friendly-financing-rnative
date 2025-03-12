@@ -1,8 +1,9 @@
-import { Button, Text } from '@components/ui';
 import { Href, router } from 'expo-router';
 import { PropsWithChildren, ReactNode } from 'react';
 import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { Button, Text } from '@/components';
 
 interface Props {
   title?: string;

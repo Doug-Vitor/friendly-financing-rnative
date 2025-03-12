@@ -1,8 +1,8 @@
-import { ContainerWithNavigation } from '@components/shared';
-import { Input, Text } from '@components/ui';
 import { useState } from 'react';
 
 import { useSharedEntry } from './useSharedEntry';
+
+import { ContainerWithNavigation, Input, Text } from '@/components';
 
 export default function PriceInCents() {
   const { entry, saveEntry, isSavingEntry } = useSharedEntry({ replaceRouteOnSuccess: true });

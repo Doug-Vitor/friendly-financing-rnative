@@ -1,10 +1,9 @@
-import { ContainerWithNavigation } from '@components/shared';
-import { Text, Input } from '@components/ui';
 import { useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 
 import { useSharedEntry } from './useSharedEntry';
 
+import { ContainerWithNavigation, Text, Input } from '@/components';
 import { formatPrice, keepNumbers } from '@/helpers/number';
 
 const days = Array.from({ length: 31 }).map((_, day) => day + 1);
