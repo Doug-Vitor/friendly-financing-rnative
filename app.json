@@ -3,7 +3,6 @@
     "name": "Friendly Financing",
     "slug": "friendly-financing",
     "version": "1.0.0",
-
     "scheme": "friendly-financing",
     "web": {
       "bundler": "metro",
@@ -25,16 +24,32 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#ffffff",
+      "dark": {
+        "image": "./assets/splash-icon-dark.png",
+        "backgroundColor": "#000000"
+      }
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.douglasvitor.dev.friendly-financing"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.dg.friendlyfinancing"
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "57e90902-c562-4580-8b74-503fa98fecc0"
       }
     }
   }

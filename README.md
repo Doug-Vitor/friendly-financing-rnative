@@ -8,7 +8,8 @@ Record your profits, losses and bills and use Friendly Financing to summarize th
 
 ## What I've learned
 - Expo router;
-- Usage of SQLite and Drizzle ORM.
+- Usage of SQLite and Drizzle ORM;
+- Insert splash and app icons.
 
 ## Running locally
  - Node, Expo and Android Studio or XCode are required;
